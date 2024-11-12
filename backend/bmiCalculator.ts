@@ -18,7 +18,7 @@ const parseArguments = (args: string[]): heightWeight => {
   return { height: +height, weight: +weight };
 };
 
-export const calculateBmi = (height: number, weight: number): string => {
+const calculateBmi = (height: number, weight: number): string => {
   const bmi: number = weight / (height / 100) ** 2;
   let message: string;
   if (bmi < 18.5) {
@@ -33,13 +33,17 @@ export const calculateBmi = (height: number, weight: number): string => {
   return message;
 };
 
-try {
-  const { height, weight } = parseArguments(process.argv);
-  console.log(calculateBmi(height, weight));
-} catch (error: unknown) {
-  let errorMessage = "An error has occurred";
-  if (error instanceof Error) {
-    errorMessage += "\nError: " + error.message;
-  }
-  console.log(errorMessage);
+export default calculateBmi;
+
+if (require.main === module) {
+  try {
+    const { height, weight } = parseArguments(process.argv);
+    console.log(calculateBmi(height, weight));
+  } catch (error: unknown) {
+    let errorMessage = "An error has occurred";
+    if (error instanceof Error) {
+      errorMessage += "\nError: " + error.message;
+    }
+    console.log(errorMessage);
+  }  
 }
