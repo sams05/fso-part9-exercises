@@ -42,8 +42,8 @@ export const calculateExercises = (dailyHours: number[], target: number): result
   const success = average >= target;
   let rating: 1 | 2 | 3;
   let ratingDescription;
-  let okThresholdPct = 0.8;
-  if (average < okThresholdPct * target) {
+  const OK_THRESHOLD_PCT = 0.8;
+  if (average < OK_THRESHOLD_PCT * target) {
     rating = 1;
     ratingDescription = "bad, need more exercise";
   } else if (average < target) {
