@@ -32,7 +32,7 @@ interface result {
   average: number;
 }
 
-export const calculateExercises = (dailyHours: number[], target: number): result => {
+const calculateExercises = (dailyHours: number[], target: number): result => {
   const periodLength = dailyHours.length;
   const trainingDays = dailyHours.filter((hour) => hour > 0).length;
   const totalHours = dailyHours.reduce(
@@ -64,13 +64,17 @@ export const calculateExercises = (dailyHours: number[], target: number): result
   };
 };
 
-try {
-    const {dailyHours, target} = parseArguments(process.argv);
-    console.log(calculateExercises(dailyHours, target));
-} catch (error: unknown) {
-    let errorMessage = "An error has occurred";
-    if (error instanceof Error) {
-      errorMessage += "\nError: " + error.message;
-    }
-    console.log(errorMessage);
+export default calculateExercises;
+
+if (require.main === module) {
+  try {
+      const {dailyHours, target} = parseArguments(process.argv);
+      console.log(calculateExercises(dailyHours, target));
+  } catch (error: unknown) {
+      let errorMessage = "An error has occurred";
+      if (error instanceof Error) {
+        errorMessage += "\nError: " + error.message;
+      }
+      console.log(errorMessage);
+  }
 }
