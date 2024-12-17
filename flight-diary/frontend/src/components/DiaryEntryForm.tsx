@@ -57,31 +57,43 @@ const DiaryEntryForm = ({
           <label>
             date
             <input
-              type="text"
+              type="date"
               value={date}
               onChange={({ target }) => setDate(target.value)}
             />
           </label>
         </div>
         <div>
-          <label>
-            weather
-            <input
-              type="text"
-              value={weather}
-              onChange={({ target }) => setWeather(target.value)}
-            />
-          </label>
+          <fieldset>
+            <legend>weather</legend>
+            {Object.values(Weather).map((weatherVal) => (
+              <label key={weatherVal}>
+                {weatherVal}
+                <input
+                  type="radio"
+                  name="weather"
+                  checked={weatherVal === weather}
+                  onChange={() => setWeather(weatherVal)}
+                />
+              </label>
+            ))}
+          </fieldset>
         </div>
         <div>
-          <label>
-            visibility
-            <input
-              type="text"
-              value={visibility}
-              onChange={({ target }) => setVisibility(target.value)}
-            />
-          </label>
+          <fieldset>
+            <legend>visibility</legend>
+            {Object.values(Visibility).map((visibilityVal) => (
+              <label key={visibilityVal}>
+                {visibilityVal}
+                <input
+                  type="radio"
+                  name="visibility"
+                  checked={visibilityVal === visibility}
+                  onChange={() => setVisibility(visibilityVal)}
+                />
+              </label>
+            ))}
+          </fieldset>
         </div>
         <div>
           <label>
