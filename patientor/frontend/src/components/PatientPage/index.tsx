@@ -33,8 +33,25 @@ const PatientPage = () => {
         {patient.gender === "male" && <Male />}
         {patient.gender === "female" && <Female />}
       </Typography>
-      <p>ssn: {patient.ssn}</p>
-      <p>occupation: {patient.occupation}</p>
+      <Typography variant="body1">ssn: {patient.ssn}</Typography>
+      <Typography variant="body1">occupation: {patient.occupation}</Typography>
+      <div>
+        <Typography variant="h6">entries</Typography>
+        {patient.entries.map((entry) => (
+          <div>
+            <Typography variant="body1">
+              {entry.date} <em>{entry.description}</em>
+            </Typography>
+            {entry.diagnosisCodes && (
+              <ul>
+                {entry.diagnosisCodes.map((code) => (
+                  <li>{code}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
