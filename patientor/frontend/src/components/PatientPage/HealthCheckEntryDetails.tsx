@@ -31,7 +31,7 @@ const HealthCheckEntryDetails = ({
   }
 
   return (
-    <Box sx={{ border: "1px solid black" }}>
+    <Box sx={{ border: "1px solid black", m: 1 }}>
       <Typography variant="body1">
         {entry.date} <MedicalServices />
       </Typography>
