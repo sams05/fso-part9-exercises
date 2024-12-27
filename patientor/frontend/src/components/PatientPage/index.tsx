@@ -5,6 +5,7 @@ import patientService from "../../services/patients.ts";
 import diagnosisService from "../../services/diagnoses.ts";
 import { Typography } from "@mui/material";
 import { Male, Female } from "@mui/icons-material";
+import EntryDetails from "./EntryDetails.tsx";
 
 const PatientPage = () => {
   const id = useParams().id;
@@ -54,20 +55,7 @@ const PatientPage = () => {
       <div>
         <Typography variant="h6">entries</Typography>
         {patient.entries.map((entry) => (
-          <div>
-            <Typography variant="body1">
-              {entry.date} <em>{entry.description}</em>
-            </Typography>
-            {entry.diagnosisCodes && (
-              <ul>
-                {entry.diagnosisCodes.map((code) => (
-                  <li>
-                    {code} {getDiagnosisName(code)}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          <EntryDetails key={entry.id} entry={entry} getDiagnosisName={getDiagnosisName} />
         ))}
       </div>
     </div>
