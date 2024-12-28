@@ -9,19 +9,19 @@ export const NewPatientSchema = z.object({
   occupation: z.string(),
 });
 
-const NewEntrySchema = z.object({
+const NewBaseEntrySchema = z.object({
   description: z.string(),
   date: z.string().date(),
   specialist: z.string(),
   diagnosisCodes: z.array(z.string()).optional(),
 });
 
-const NewHealthCheckEntrySchema = NewEntrySchema.extend({
+const NewHealthCheckEntrySchema = NewBaseEntrySchema.extend({
   type: z.literal("HealthCheck"),
   healthCheckRating: z.nativeEnum(HealthCheckRating),
 });
 
-const NewHospitalEntrySchema = NewEntrySchema.extend({
+const NewHospitalEntrySchema = NewBaseEntrySchema.extend({
   type: z.literal("Hospital"),
   discharge: z
     .object({
@@ -31,7 +31,7 @@ const NewHospitalEntrySchema = NewEntrySchema.extend({
     .optional(),
 });
 
-const NewOccupationalHealthcareEntry = NewEntrySchema.extend({
+const NewOccupationalHealthcareEntry = NewBaseEntrySchema.extend({
   type: z.literal("OccupationalHealthcare"),
   employerName: z.string(),
   sickLeave: z
@@ -42,7 +42,7 @@ const NewOccupationalHealthcareEntry = NewEntrySchema.extend({
     .optional(),
 });
 
-const NewDiscriminatedEntrySchema = z.discriminatedUnion("type", [
+const NewEntrySchema = z.discriminatedUnion("type", [
   NewHealthCheckEntrySchema,
   NewHospitalEntrySchema,
   NewOccupationalHealthcareEntry,
@@ -50,4 +50,4 @@ const NewDiscriminatedEntrySchema = z.discriminatedUnion("type", [
 
 // Wrapper for NewDisciminatedEntrySchema.parse for cleaner function signature
 export const parseNewEntry = (object: unknown): NewEntry =>
-  NewDiscriminatedEntrySchema.parse(object);
+  NewEntrySchema.parse(object);
