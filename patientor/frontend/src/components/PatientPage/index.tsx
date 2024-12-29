@@ -6,7 +6,7 @@ import diagnosisService from "../../services/diagnoses.ts";
 import { Typography } from "@mui/material";
 import { Male, Female } from "@mui/icons-material";
 import EntryDetails from "./EntryDetails";
-import NewEntryForm from "./NewEntryForm";
+import NewEntryFormToggler from "./NewEntryFormToggler";
 
 const PatientPage = () => {
   const id = useParams().id;
@@ -62,7 +62,7 @@ const PatientPage = () => {
       </Typography>
       <Typography variant="body1">ssn: {patient.ssn}</Typography>
       <Typography variant="body1">occupation: {patient.occupation}</Typography>
-      <NewEntryForm patientId={id} updateEntries={updateEntries} />
+      <NewEntryFormToggler patientId={id} updateEntries={updateEntries} />
       <div>
         <Typography variant="h6">entries</Typography>
         {patient.entries.map((entry) => (

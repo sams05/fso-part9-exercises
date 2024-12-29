@@ -69,3 +69,10 @@ export interface Patient {
 }
 
 export type PatientFormValues = Omit<Patient, "id" | "entries">;
+
+export enum FormType {
+  "None" = 0,
+  "HealthCheck" = 1,
+  "Hospital" = 2,
+  "OccupationalHealthcare" = 3,
+}
