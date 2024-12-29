@@ -1,4 +1,4 @@
-import { HealthCheckEntry, HealthCheckRating } from "../../types";
+import { HealthCheckEntry, HealthCheckRating } from "../../../types";
 import { Box, Typography } from "@mui/material";
 import { MedicalServices, Favorite } from "@mui/icons-material";
 import { green, yellow, orange, red } from '@mui/material/colors';

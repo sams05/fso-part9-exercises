@@ -1,18 +1,18 @@
-import { HospitalEntry } from "../../types";
+import { OccupationalHealthcareEntry } from "../../../types";
 import { Box, Typography } from "@mui/material";
-import { LocalHospital } from "@mui/icons-material";
+import { Work } from "@mui/icons-material";
 
-const HospitalEntryDetails = ({
+const OccupationalHealthcareEntryDetails = ({
   entry,
   getDiagnosisName,
 }: {
-  entry: HospitalEntry;
+  entry: OccupationalHealthcareEntry;
   getDiagnosisName: (a: string) => string | undefined;
 }) => {
   return (
     <Box sx={{ border: "1px solid black", m: 1 }}>
       <Typography variant="body1">
-        {entry.date} <LocalHospital />
+        {entry.date} <Work /> <em>{entry.employerName}</em>
       </Typography>
       <Typography variant="body1">
         <em>{entry.description}</em>
@@ -31,10 +31,11 @@ const HospitalEntryDetails = ({
         </Box>
       )}
 
-      {entry.discharge && (
+      {entry.sickLeave && (
         <Box sx={{ border: "1px solid black" }}>
-          <p>Discharged: {entry.discharge.date}</p>
-          <p>{entry.discharge.criteria}</p>
+          <p>
+            On leave: {entry.sickLeave.startDate} to {entry.sickLeave.endDate}
+          </p>
         </Box>
       )}
 
@@ -43,4 +44,4 @@ const HospitalEntryDetails = ({
   );
 };
 
-export default HospitalEntryDetails;
+export default OccupationalHealthcareEntryDetails;

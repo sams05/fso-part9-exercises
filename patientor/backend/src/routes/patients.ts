@@ -3,6 +3,7 @@ import patientService from "../services/patientService";
 import { NewPatientSchema, parseNewEntry } from "../utils";
 import { Patient, NewPatient, NewEntry, Entry } from "../types";
 import { z } from "zod";
+import {fromError} from 'zod-validation-error';
 
 const router = express.Router();
 
@@ -23,7 +24,8 @@ const errorMiddleware = (
   next: NextFunction
 ) => {
   if (error instanceof z.ZodError) {
-    res.status(400).send({ error: error.issues });
+    const validationError = fromError(error);
+    res.status(400).send({ validationError: validationError.toString() });
   } else {
     next(error);
   }
