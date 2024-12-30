@@ -62,7 +62,7 @@ const PatientPage = () => {
       </Typography>
       <Typography variant="body1">ssn: {patient.ssn}</Typography>
       <Typography variant="body1">occupation: {patient.occupation}</Typography>
-      <NewEntryFormToggler patientId={id} updateEntries={updateEntries} />
+      <NewEntryFormToggler patientId={id} updateEntries={updateEntries} diagnosisCodes={diagnoses?.map(({code}) => code)} />
       <div>
         <Typography variant="h6">entries</Typography>
         {patient.entries.map((entry) => (

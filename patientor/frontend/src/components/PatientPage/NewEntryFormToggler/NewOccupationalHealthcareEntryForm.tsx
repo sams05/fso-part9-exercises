@@ -1,4 +1,14 @@
-import { Typography, TextField, Stack, Button, Alert } from "@mui/material";
+import {
+  Typography,
+  TextField,
+  Stack,
+  Button,
+  Alert,
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem,
+} from "@mui/material";
 import React, { useState } from "react";
 import patientService from "../../../services/patients";
 import { isAxiosError } from "axios";
@@ -8,17 +18,19 @@ const NewOccupationalHealthcareEntryForm = ({
   patientId,
   updateEntries,
   closeForm,
+  diagnosisCodes: diagnosisCodesOptions,
 }: {
   patientId: string;
   updateEntries: (entry: Entry) => void;
   closeForm: () => void;
+  diagnosisCodes: string[] | undefined;
 }) => {
   const [error, setError] = useState<string | null>();
 
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [specialist, setSpecialist] = useState("");
-  const [diagnosisCodes, setDiagnosisCodes] = useState("");
+  const [diagnosisCodes, setDiagnosisCodes] = useState<string[]>([]);
   const [employerName, setEmployerName] = useState("");
   const [sickLeaveStartDate, setSickLeaveStartDate] = useState("");
   const [sickLeaveEndDate, setSickLeaveEndDate] = useState("");
@@ -27,16 +39,12 @@ const NewOccupationalHealthcareEntryForm = ({
     event.preventDefault();
 
     try {
-      const diagnosisCodesArr = diagnosisCodes.split(",");
       const newEntry = await patientService.createEntry(patientId, {
         type: "OccupationalHealthcare",
         description,
         date,
         specialist,
-        diagnosisCodes:
-          diagnosisCodesArr[0] === diagnosisCodes
-            ? undefined
-            : diagnosisCodesArr,
+        diagnosisCodes: diagnosisCodes.length > 0 ? diagnosisCodes : undefined,
         employerName,
         sickLeave:
           sickLeaveStartDate && sickLeaveEndDate
@@ -51,7 +59,7 @@ const NewOccupationalHealthcareEntryForm = ({
       setDescription("");
       setDate("");
       setSpecialist("");
-      setDiagnosisCodes("");
+      setDiagnosisCodes([]);
       setEmployerName("");
       setSickLeaveStartDate("");
       setSickLeaveEndDate("");
@@ -81,6 +89,7 @@ const NewOccupationalHealthcareEntryForm = ({
       >
         <Typography variant="h5">New Occupational Healthcare entry</Typography>
         <TextField
+          required
           fullWidth
           margin="normal"
           id="description"
@@ -89,14 +98,18 @@ const NewOccupationalHealthcareEntryForm = ({
           onChange={({ target }) => setDescription(target.value)}
         />
         <TextField
+          type="date"
+          required
           fullWidth
           margin="normal"
           id="date"
           label="Date"
+          InputLabelProps={{ shrink: true }}
           value={date}
           onChange={({ target }) => setDate(target.value)}
         />
         <TextField
+          required
           fullWidth
           margin="normal"
           id="specialist"
@@ -104,15 +117,31 @@ const NewOccupationalHealthcareEntryForm = ({
           value={specialist}
           onChange={({ target }) => setSpecialist(target.value)}
         />
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="diagnosis-codes-label">Diagnosis Codes</InputLabel>
+          <Select
+            labelId="diagnosis-codes-label"
+            id="diagnosis-codes"
+            multiple
+            value={diagnosisCodes}
+            label="Diagnosis Codes"
+            onChange={({ target }) =>
+              setDiagnosisCodes(
+                typeof target.value === "string"
+                  ? target.value.split(",")
+                  : target.value
+              )
+            }
+          >
+            {diagnosisCodesOptions?.map((code) => (
+              <MenuItem key={code} value={code}>
+                {code}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <TextField
-          fullWidth
-          margin="normal"
-          id="diagnosis-codes"
-          label="Diagnosis Codes"
-          value={diagnosisCodes}
-          onChange={({ target }) => setDiagnosisCodes(target.value)}
-        />
-        <TextField
+          required
           fullWidth
           margin="normal"
           id="employer-name"
@@ -121,18 +150,22 @@ const NewOccupationalHealthcareEntryForm = ({
           onChange={({ target }) => setEmployerName(target.value)}
         />
         <TextField
+          type="date"
           fullWidth
           margin="normal"
           id="sick-leave-start-date"
           label="Sick Leave Start Date"
+          InputLabelProps={{ shrink: true }}
           value={sickLeaveStartDate}
           onChange={({ target }) => setSickLeaveStartDate(target.value)}
         />
         <TextField
+          type="date"
           fullWidth
           margin="normal"
           id="sick-leave-end-date"
           label="Sick Leave End Date"
+          InputLabelProps={{ shrink: true }}
           value={sickLeaveEndDate}
           onChange={({ target }) => setSickLeaveEndDate(target.value)}
         />

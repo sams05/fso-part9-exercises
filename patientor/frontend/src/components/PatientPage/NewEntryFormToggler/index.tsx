@@ -8,9 +8,11 @@ import NewOccupationalHealthcareEntryForm from "./NewOccupationalHealthcareEntry
 const NewEntryFormToggler = ({
   patientId,
   updateEntries,
+  diagnosisCodes,
 }: {
   patientId: string;
   updateEntries: (entry: Entry) => void;
+  diagnosisCodes: string[] | undefined;
 }) => {
   const [formType, setFormType] = useState(FormType.None);
 
@@ -45,6 +47,7 @@ const NewEntryFormToggler = ({
           patientId={patientId}
           updateEntries={updateEntries}
           closeForm={closeForm}
+          diagnosisCodes={diagnosisCodes}
         />
       )}
       {formType === FormType.Hospital && (
@@ -52,6 +55,7 @@ const NewEntryFormToggler = ({
           patientId={patientId}
           updateEntries={updateEntries}
           closeForm={closeForm}
+          diagnosisCodes={diagnosisCodes}
         />
       )}
       {formType === FormType.OccupationalHealthcare && (
@@ -59,6 +63,7 @@ const NewEntryFormToggler = ({
           patientId={patientId}
           updateEntries={updateEntries}
           closeForm={closeForm}
+          diagnosisCodes={diagnosisCodes}
         />
       )}
     </div>
